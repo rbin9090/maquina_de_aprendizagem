@@ -5,9 +5,13 @@ session_start();
 
 $_SESSION['perguntas'][] = "Quanto custa esse item?";
 $_SESSION['perguntas'][] = "Posso parcelar?";
+$_SESSION['perguntas'][] = "aceita pix?";
+$_SESSION['perguntas'][] = "Qual cnpj dessa empresa?";
 
 $respostas = $_SESSION['respostas'][] = "R$:10,00";
 $respostas = $_SESSION['respostas'][] = "SIM";
+$respostas = $_SESSION['respostas'][] = "desde qu sua chave esteja funcionando!";
+$respostas = $_SESSION['respostas'][] = "089-754-568-210-1!";
 
 if (isset($_POST['acao'])) {
 	$pergunta = $_POST['pergunta'];
@@ -17,6 +21,11 @@ if (isset($_POST['acao'])) {
 			$resposta = $_SESSION['respostas'][$key];
 		}
 	}
+}else if(
+	isset($_POST['cadastrar_resposta'])){
+	$_SESSION['perguntas'][] = $_POST['pergunta'];
+	$_SESSION['respostas'][] = $_POST['resposta'];
+	echo("<script>alert('obrigado voçê me ajudou aprender um pouco mais!')</script>");
 }
 
 ?>
@@ -32,11 +41,31 @@ if (isset($_POST['acao'])) {
 
 <?php
 if (isset($resposta)) {
-	echo 'sua pergunta com base na pergunta é:'.$resposta;
+	echo $resposta;
 }else if(isset($_POST['acao'])){
 	echo 'ops.. nosso robo nao etendeu sua pergunta';
+	$criarresposta = true;
 }
 
 ?>
 
 </form>
+
+
+<?php
+
+
+if (isset($criarresposta) && isset($_POST['acao'])) {
+	// code...
+?>
+<form method="POST">
+	<h2>Tem alguma idéia da resposta, para ajudar o robô aprender mais?</h2>
+	<input type="text" name="resposta" />
+	<input type="hidden" name="pergunta" value="<?php echo $_POST['pergunta'] ?>">
+	<input type="submit" name="cadastrar_resposta" />
+</form>
+<?php
+
+}
+
+?>
