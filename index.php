@@ -6,14 +6,15 @@ session_start();
 $_SESSION['perguntas'][] = "Quanto custa esse item?";
 $_SESSION['perguntas'][] = "Posso parcelar?";
 
-$respostas = $_SESSION['resposta'][] = "R$:10,00";
-$respostas = $_SESSION['resposta'][] = "SIM";
+$respostas = $_SESSION['respostas'][] = "R$:10,00";
+$respostas = $_SESSION['respostas'][] = "SIM";
+
 if (isset($_POST['acao'])) {
 	$pergunta = $_POST['pergunta'];
 	foreach ($_SESSION['perguntas'] as $key => $value) {
-		$teste = preg_match('/'.$pergunta.'/i',$value);
-		if($teste){
-			$respostas = $_SESSION['respostas'][$key];
+		$testar = preg_match('/'.$pergunta.'/i',$value);
+		if($testar){
+			$resposta = $_SESSION['respostas'][$key];
 		}
 	}
 }
@@ -31,7 +32,7 @@ if (isset($_POST['acao'])) {
 
 <?php
 if (isset($resposta)) {
-	echo 'sua pergunta com base na resposta é:'.$resposta;
+	echo 'sua pergunta com base na pergunta é:'.$resposta;
 }else if(isset($_POST['acao'])){
 	echo 'ops.. nosso robo nao etendeu sua pergunta';
 }
